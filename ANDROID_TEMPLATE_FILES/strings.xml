@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RNFacebookFirebase</string>
+    <string name="facebook_app_id">MY_APP_ID</string>
+
+</resources>
