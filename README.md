@@ -1,6 +1,11 @@
 # react-native-facebook-firebase
 Template for using Facebook login with Firebase. State management with Flux + Redux.
-This example app simply displays your Facebook profile picture, as well as a "bio" that gets stored in the users table of your firebase app.
+This example app simply displays your Facebook profile picture, as well as a "bio" that gets stored in the users table of your firebase app. The app listens for changes to your firebase table(s) and updates in real time.
+
+![Login Page](http://i.imgur.com/E7mq5Jd.png)
+![Facebook Modal](http://imgur.com/sACDWd7.png)
+![Home Page](http://imgur.com/31xkbGj.png)
+
 
 ##Installation
 
@@ -38,4 +43,9 @@ More information can be found at https://github.com/facebook/react-native-fbsdk.
 
 ###Step 4 - IOS configuration
 Not tested yet.
+
+## About
+I built this project to be a simple, modular, and easily extended starting point for a common pattern. The other guides and projects I've found only partially demonstrate integrating Firebase, social login, and Flux/Redux.
+
+Feedback and contributions are most welcome (especially a tester for iPhone)!
 
