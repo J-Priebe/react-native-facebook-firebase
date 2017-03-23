@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
 
 	    return {
 	      ...state,
-	      bio: action.profileData.bio
+	      bio: action.profileData ? action.profileData.bio : ''
 	    }
 	  
 	  default:
