@@ -11,10 +11,8 @@ import {
   Dimensions
 } from 'react-native';
 
-import { LoginButton, AccessToken} from 'react-native-fbsdk'
+import { LoginButton } from 'react-native-fbsdk'
 import {Actions, ActionConst} from 'react-native-router-flux'
-
-import {firebaseLogout} from '../firebase/firebase'
 
 
 import styles from '../styles/styles';

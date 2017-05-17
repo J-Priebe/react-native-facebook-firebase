@@ -10,16 +10,14 @@ import {
   View
 } from 'react-native';
 
-import { LoginManager, LoginButton, AccessToken} from 'react-native-fbsdk';
+import { AccessToken } from 'react-native-fbsdk';
 
-import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 
 import styles from '../styles/styles';
 
 import {checkFirebaseAuth} from '../firebase/firebase'
-
-import {userLoggedIn, userLoggedOut} from '../actions/auth'
 
 
 export default class Splash extends Component {

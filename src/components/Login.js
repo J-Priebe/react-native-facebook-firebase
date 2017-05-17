@@ -10,11 +10,10 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-import { LoginManager, LoginButton, AccessToken} from 'react-native-fbsdk';
+import { LoginButton } from 'react-native-fbsdk';
 
-import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
-import {firebaseLogin} from '../firebase/firebase'
 
 import styles from '../styles/styles';
 
@@ -65,23 +64,4 @@ export default class Login extends Component {
         </View>
       )
   }
-
-  // login(accessTokenData){
-
-  //   this.setState({
-  //     loading: true
-  //   })
-
-  //   firebaseLogin(accessTokenData)
-  //   .then((userData) =>
-  //     {
-  //       Actions.splash()
-  //     }
-  //   ).catch((error) =>
-  //     {
-  //       console.log('login error: ' + error)
-  //     }
-  //   )
-
-  // }
 }
