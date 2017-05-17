@@ -64,7 +64,10 @@ export default class Home extends Component {
 		</View>
 		<View  style={{flex: 1, justifyContent: 'flex-end' }}>
 			<LoginButton
-			  onLogoutFinished={ this.logout.bind(this) }
+			  onLogoutFinished={ 
+			  	this.logout.bind(this) 
+
+			  }
 			/>
 		</View>
 		</View>
@@ -79,19 +82,8 @@ export default class Home extends Component {
 
 	logout(){
 
-		this.setState({
-		  loading: true
-		})
+		Actions.splash({type: ActionConst.RESET})
 
-		firebaseLogout().then((result) => 
-		  {
-		  	Actions.splash({type: ActionConst.RESET})
-		  }
-		).catch((error) => 
-		  {
-		  	console.log("Logout error: " + error)
-		  }
-		)
 	}
 }
 

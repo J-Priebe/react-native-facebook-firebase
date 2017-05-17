@@ -48,11 +48,10 @@ export default class Login extends Component {
               } else if (result.isCancelled) {
                 alert("Facebook login cancelled.");
               } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (accessTokenData) => {
-                    this.login(accessTokenData);
-                  }
-                )
+
+                Actions.splash({type: ActionConst.RESET})
+
+ 
               }
             }
           }
@@ -67,22 +66,22 @@ export default class Login extends Component {
       )
   }
 
-  login(accessTokenData){
+  // login(accessTokenData){
 
-    this.setState({
-      loading: true
-    })
+  //   this.setState({
+  //     loading: true
+  //   })
 
-    firebaseLogin(accessTokenData)
-    .then((userData) =>
-      {
-        Actions.splash()
-      }
-    ).catch((error) =>
-      {
-        console.log('login error: ' + error)
-      }
-    )
+  //   firebaseLogin(accessTokenData)
+  //   .then((userData) =>
+  //     {
+  //       Actions.splash()
+  //     }
+  //   ).catch((error) =>
+  //     {
+  //       console.log('login error: ' + error)
+  //     }
+  //   )
 
-  }
+  // }
 }

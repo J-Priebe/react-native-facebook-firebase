@@ -10,12 +10,16 @@ import {
   View
 } from 'react-native';
 
+import { LoginManager, LoginButton, AccessToken} from 'react-native-fbsdk';
 
 import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 
-import { getAuthState } from '../firebase/firebase'
 
 import styles from '../styles/styles';
+
+import {checkFirebaseAuth} from '../firebase/firebase'
+
+import {userLoggedIn, userLoggedOut} from '../actions/auth'
 
 
 export default class Splash extends Component {
@@ -23,15 +27,22 @@ export default class Splash extends Component {
     super(props);
   }
 
+
   componentDidMount(){
-    // set app state according to whether user is logged in or not
-    getAuthState(this.props.store).then((user) => {
-      if(user) {
-        Actions.home({type: ActionConst.RESET})
-      }else{
-        Actions.login({type: ActionConst.RESET})
-      }
-    })
+
+    AccessToken.getCurrentAccessToken().then(
+      (accessTokenData) => {
+        checkFirebaseAuth(accessTokenData, this.props.store).then((user) => {
+          
+          if (user){
+            Actions.home({type: ActionConst.RESET})
+          }else{
+            Actions.login({type: ActionConst.RESET})
+          }
+
+        })
+
+      })
   }
 
   render(){

@@ -23,68 +23,88 @@ const currentUser = () => {
   return firebaseApp.auth().currentUser
 }
 
-export const getAuthState = (store) => new Promise((resolve, reject) => {
 
-  // see https://firebase.google.com/docs/auth/web/manage-users
-  const unsubscribe = firebaseApp.auth().onAuthStateChanged((user) => {
-
-      // User is logged in. connect to firebase and redirect to home
-      if (user ) {
-
-        attachProfileListener(store) // listen for changes to profile
-        store.dispatch( userLoggedIn( user ) )
-        resolve(user)
-        return
-      } 
-
-      store.dispatch( userLoggedOut() )
-      resolve(null)
-
-      unsubscribe()
-      return
-  });  
-})
+function isUserEqual(facebookAuthResponse, firebaseUser) {
+  if (firebaseUser) {
+    var providerData = firebaseUser.providerData;
+    for (var i = 0; i < providerData.length; i++) {
+      if (providerData[i].providerId === Firebase.auth.FacebookAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === facebookAuthResponse.userID) {
+        // We don't need to re-auth the Firebase connection.
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 
+export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolve, reject) => {
 
-// login with facebook credential
-export const firebaseLogin = (accessTokenData) => new Promise((resolve, reject) => {
-  
-  let provider = new Firebase.auth.FacebookAuthProvider();
+  if (accessTokenData) {
 
-  const credential = Firebase.auth.FacebookAuthProvider.credential(
-        accessTokenData.accessToken
-  );
+     // User is signed-in Facebook.
+      const unsubscribe = firebaseApp.auth().onAuthStateChanged(function(firebaseUser) {
+
+       unsubscribe();
+
+       // Check if we are already signed-in Firebase with the correct user.
+       if (!isUserEqual(accessTokenData, firebaseUser)) {
+
+         // Build Firebase credential with the Facebook auth token.
+         var credential = Firebase.auth.FacebookAuthProvider.credential(
+             accessTokenData.accessToken);
+
+         // Sign in with the credential from the Facebook user.
+         firebaseApp.auth().signInWithCredential(credential)
+         .then((newUser) =>
+           {
+
+              attachProfileListener(store) // listen for changes to profile
+              store.dispatch( userLoggedIn( newUser ) )
+              resolve(newUser)
+              return
+
+           }
+         ).catch((error) =>
+           {
+
+             reject(error)
+             return
+             
+           }
+         )
+
+       } else {
+
+         // User is already signed-in Firebase with the correct user.
+         attachProfileListener(store) // listen for changes to profile
+         store.dispatch( userLoggedIn( firebaseUser ) )
+         resolve(firebaseUser)
+         return
+       }
+
+
+     });
    
-  firebaseApp.auth().signInWithCredential(credential)
-  .then((userData) =>
-    {
-      resolve(userData)
-    }
-  ).catch((error) =>
-    {
-      reject(error)
-    }
-  )
+   } else {
+     // User is signed-out of Facebook.
+     firebaseApp.auth().signOut().then(() => 
+       {
+         store.dispatch( userLoggedOut() )
+         resolve(null)
+         return
+       }
+     ).catch((error) => 
+       {
+         reject(error)
+         return
+       }
+     )
+   }
+
+
 })
-
-
-// logout (de-auth facebook) and disconnect listeners
-export const firebaseLogout = () => new Promise((resolve, reject) => {
-    
-    detachProfileListener()
-
-    firebaseApp.auth().signOut().then(() => 
-      {
-        resolve("logout successful")
-      }
-    ).catch((error) => 
-      {
-        reject(error)
-      }
-    )
-})
-
 
 
 // firebase update functions go here
@@ -95,7 +115,6 @@ export function updateFirebaseProfile(updates){
   profileRef.update(
 	  updates
 	)
-
 }
 
 
@@ -107,11 +126,3 @@ function attachProfileListener(store){
     store.dispatch( updateProfileSuccess( snapshot.val() ) )
   })
 }
-
-
-// remove listeners
-function detachProfileListener(){
-  const profileRef = firebaseApp.database().ref().child('users').child(currentUser().uid)
-  profileRef.off()
-}
-

@@ -6,5 +6,5 @@ import auth from './auth'
 
 export default combineReducers({
   profile,
-  auth
+  auth 
 })
