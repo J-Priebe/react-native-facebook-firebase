@@ -137,6 +137,8 @@ function attachProfileListener(store){
   // listen to the user's profile (i.e., bio) and dispatch an action if it changes
   const profileRef = firebaseApp.database().ref().child('users').child(currentUser().uid)
   profileRef.on('value', (snapshot) => {
-    store.dispatch( updateProfileSuccess( snapshot.val() ) )
+    if (snapshot.val()){ 
+          store.dispatch( updateProfileSuccess( snapshot.val() ) )
+    }
   })
 }
