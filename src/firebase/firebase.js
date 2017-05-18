@@ -23,7 +23,6 @@ const currentUser = () => {
   return firebaseApp.auth().currentUser
 }
 
-
 function isUserEqual(facebookAuthResponse, firebaseUser) {
   if (firebaseUser) {
     var providerData = firebaseUser.providerData;
@@ -37,7 +36,6 @@ function isUserEqual(facebookAuthResponse, firebaseUser) {
   }
   return false;
 }
-
 
 export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolve, reject) => {
 
@@ -60,7 +58,7 @@ export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolv
          .then((newUser) =>
            {
 
-              attachProfileListener(store) // listen for changes to profile
+              attachProfileListener(store) 
               store.dispatch( userLoggedIn( newUser ) )
               resolve(newUser)
               return
@@ -71,14 +69,14 @@ export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolv
 
              reject(error)
              return
-             
+
            }
          )
 
        } else {
 
          // User is already signed-in Firebase with the correct user.
-         attachProfileListener(store) // listen for changes to profile
+         attachProfileListener(store) 
          store.dispatch( userLoggedIn( firebaseUser ) )
          resolve(firebaseUser)
          return
@@ -103,11 +101,10 @@ export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolv
      )
    }
 
-
 })
 
-
 // firebase update functions go here
+// called by corresponding redux actions (see actions/profile.js)
 export function updateFirebaseProfile(updates){
   const currentUser = firebaseApp.auth().currentUser
 	const profileRef = firebaseApp.database().ref().child('users').child(currentUser.uid)
@@ -117,9 +114,25 @@ export function updateFirebaseProfile(updates){
 	)
 }
 
-
 // listen for changes to firebase and dispatch actions to update app state
 function attachProfileListener(store){
+
+
+  const dbRef = firebaseApp.database().ref()
+  dbRef.once('value').then(function(snapshot) {
+
+    if (snapshot.hasChild('users')){
+      console.log("Users table already exists.")
+
+    }else{
+
+      console.log("Users table does not exist. Creating.")
+      let updates = {bio: "ayy lmao"}
+      updateFirebaseProfile(updates)
+    }
+
+  });
+
   const profileRef = firebaseApp.database().ref().child('users').child(currentUser().uid)
 
   profileRef.on('value', (snapshot) => {

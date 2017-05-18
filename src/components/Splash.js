@@ -25,7 +25,6 @@ export default class Splash extends Component {
     super(props);
   }
 
-
   componentDidMount(){
 
     AccessToken.getCurrentAccessToken().then(
@@ -37,9 +36,7 @@ export default class Splash extends Component {
           }else{
             Actions.login({type: ActionConst.RESET})
           }
-
         })
-
       })
   }
 
