@@ -14,7 +14,6 @@ import { AccessToken } from 'react-native-fbsdk';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 
-
 import styles from '../styles/styles';
 
 import {checkFirebaseAuth} from '../firebase/firebase'
@@ -27,19 +26,25 @@ export default class Splash extends Component {
 
   componentDidMount(){
 
+    // Check if we have a facebook access token (can be null)
     AccessToken.getCurrentAccessToken().then(
       (accessTokenData) => {
+
+        // returns the current user is facebook token is valid and firebase login was succesful
         checkFirebaseAuth(accessTokenData, this.props.store).then((user) => {
           
           if (user){
             Actions.home({type: ActionConst.RESET})
-          }else{
+
+          }else{ // user needs to login to get a Facebook auth token
             Actions.login({type: ActionConst.RESET})
           }
         })
       })
   }
 
+
+  // Display loading indicator until redirect to Login or Home
   render(){
 
     return(

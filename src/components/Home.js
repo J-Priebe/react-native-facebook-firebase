@@ -33,7 +33,9 @@ export default class Home extends Component {
 	  })
 	}
 
-
+	// display user's facebook photo, profile bio, and logout button
+	// photo is accesible directly from firebase user object
+	// bio is stored in a seperate firebase users table
 	render(){
 
 		const content = (this.props.currentUser == null || this.state.loading )? <ActivityIndicator size="large" /> :
@@ -64,7 +66,6 @@ export default class Home extends Component {
 			<LoginButton
 			  onLogoutFinished={ 
 			  	this.logout.bind(this) 
-
 			  }
 			/>
 		</View>
@@ -77,11 +78,9 @@ export default class Home extends Component {
 		)
 	}
 
-
+	// return to splash page now that facebook token has been revoked
 	logout(){
-
 		Actions.splash({type: ActionConst.RESET})
-
 	}
 }
 

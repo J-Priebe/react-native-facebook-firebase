@@ -39,6 +39,8 @@ export default class Login extends Component {
   render() {
     const content = 
         this.state.loading? <ActivityIndicator size="large" /> :
+        
+        // LoginButton from fbsdk handles popups and auth token retrieval
         <LoginButton
           onLoginFinished={
             (error, result) => {
@@ -47,10 +49,8 @@ export default class Login extends Component {
               } else if (result.isCancelled) {
                 alert("Facebook login cancelled.");
               } else {
-
+                // return to splash page with new auth token
                 Actions.splash({type: ActionConst.RESET})
-
- 
               }
             }
           }
