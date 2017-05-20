@@ -21,7 +21,7 @@ import Login from './src/components/Login'
 import Home from './src/components/Home'
 
 
-const store = configureStore()
+export const store = configureStore()
 
 
 // map Redux state and actions to component props 
@@ -51,7 +51,6 @@ const scenes = Actions.create(
       <Scene 
           key="splash"
           component={ConnectedSplash}
-          store={store} 
           title="Loading"
           hideNavBar={true}
       />

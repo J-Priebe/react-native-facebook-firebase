@@ -7,6 +7,9 @@ import * as Firebase from 'firebase';
 
 import config from './config'
 
+import { store } from '../../App'
+
+
 // init firebase
 const firebaseConfig = {
   apiKey: config.API_KEY,
@@ -39,7 +42,7 @@ function isUserEqual(facebookAuthResponse, firebaseUser) {
   return false;
 }
 
-export const checkFirebaseAuth = (accessTokenData, store) => new Promise((resolve, reject) => {
+export const checkFirebaseAuth = (accessTokenData) => new Promise((resolve, reject) => {
 
   if (accessTokenData) {
 

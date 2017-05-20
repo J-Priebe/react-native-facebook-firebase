@@ -31,7 +31,7 @@ export default class Splash extends Component {
       (accessTokenData) => {
 
         // returns the current user is facebook token is valid and firebase login was succesful
-        checkFirebaseAuth(accessTokenData, this.props.store).then((user) => {
+        checkFirebaseAuth(accessTokenData).then((user) => {
           
           if (user){
             Actions.home({type: ActionConst.RESET})
