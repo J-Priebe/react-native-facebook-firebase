@@ -6,9 +6,9 @@ This example app simply displays your Facebook profile picture, as well as a "bi
 ![Facebook Modal](http://imgur.com/sACDWd7.png)
 ![Home Page](http://imgur.com/31xkbGj.png)
 
-I built this project to be a simple, modular, and easily extended starting point for a common pattern, which you can actually use as the basis for nontrivial projects. The other guides and projects I've found only partially demonstrate integrating Firebase, social login, and Flux/Redux, or insist upon personal tastes in build environment, additional packages, etc.
+I built this project to be a simple, modular, and easily extended starting point for a common pattern. The other guides and projects I've found only partially demonstrate integrating Firebase, social login, and Flux/Redux, or reflect personal tastes in build environment, additional packages, etc.
 
-This is NOT meant to be a crash course in Firebase or Flux/Redux. I tried to keep everything as simple as possible, but I strongly recommend some knowledge of each - refs and listeners in Firebase, Scenes/Routers in Flux, and the state/action paradigm of Redux.
+This is NOT meant to be a crash course in Firebase or Flux/Redux. I tried to keep everything as simple as possible, but some background is helpful - refs and listeners in Firebase, Scenes/Routers in Flux, and the state/action paradigm of Redux.
 
 Feedback and contributions are most welcome (especially a tester for iPhone)!
 
